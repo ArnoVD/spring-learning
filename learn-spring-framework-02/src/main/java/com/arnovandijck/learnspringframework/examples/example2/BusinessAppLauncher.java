@@ -8,11 +8,14 @@ import java.util.Arrays;
 
 @Configuration
 @ComponentScan
-public class DepInjectionAppLauncher2 {
+public class BusinessAppLauncher {
     public static void main(String[] args) {
         // try with resources will close the context after the try block
-        try (var context = new AnnotationConfigApplicationContext(DepInjectionAppLauncher2.class)) {
+        try (var context = new AnnotationConfigApplicationContext(BusinessAppLauncher.class)) {
             Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+
+            var businessCalculationService = context.getBean(BusinessCalculationService.class);
+            System.out.println(businessCalculationService.findMax());
         }
     }
 }
