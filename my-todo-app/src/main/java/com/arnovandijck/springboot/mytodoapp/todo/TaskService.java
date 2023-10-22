@@ -19,11 +19,11 @@ public class TaskService {
     }
 
     public static List<Task> findTaskByUser(String user) {
-        return tasks.stream().filter(task -> task.getUser().equals(user)).toList();
+        return tasks.stream().filter(task -> task.getUserName().equalsIgnoreCase(user)).toList();
     }
 
     public static Task findTaskById(int id) {
-        return tasks.stream().findFirst().filter(task -> task.getId() == id).orElse(null);
+        return tasks.stream().filter(task -> task.getId() == id).findFirst().orElse(null);
     }
 
     public static void addNewTask(String user, String description, LocalDate targetDate, boolean taskIsDone) {
