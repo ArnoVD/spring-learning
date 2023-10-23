@@ -13,9 +13,9 @@ public class TaskService {
     private static int tasksCount = 1;
 
     static {
-        tasks.add(new Task(tasksCount++, "arno", "Learn Spring MVC", LocalDate.now(), false));
-        tasks.add(new Task(tasksCount++, "arno", "Learn Struts", LocalDate.now(), false));
-        tasks.add(new Task(tasksCount++, "arno", "Learn Hibernate", LocalDate.now(), false));
+        tasks.add(new Task(tasksCount++, "arno", "Learn Spring MVC static", LocalDate.now(), false));
+        tasks.add(new Task(tasksCount++, "arno", "Learn Struts static", LocalDate.now(), false));
+        tasks.add(new Task(tasksCount++, "arno", "Learn Hibernate static", LocalDate.now(), false));
     }
 
     public static List<Task> findTaskByUser(String user) {

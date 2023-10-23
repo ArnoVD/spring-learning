@@ -9,15 +9,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
-// Controller is disabled (commented out) because we are using TaskControllerJpa
-//@Controller
+@Controller
 @SessionAttributes("name")
-public class TaskController {
+public class TaskControllerJpa {
+
+    private final TaskRepository taskRepository;
+
+    public TaskControllerJpa(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @RequestMapping(value = "/list-tasks")
     public String showTaskListPage(ModelMap model) {
         String userName = getLoggedInUserName();
-        model.addAttribute("tasks", TaskService.findTaskByUser(userName));
+        model.addAttribute("tasks", taskRepository.findAllByUserName(userName));
         return "list-tasks";
     }
 
@@ -30,13 +35,12 @@ public class TaskController {
 
     @GetMapping(value = "/update-task")
     public String showUpdateTaskPage(@RequestParam int id, ModelMap model) {
-        Task task = TaskService.findTaskById(id);
+        Task task = taskRepository.findById(id).orElse(null);
         // not null or not empty
         if(task != null) {
             model.addAttribute("task", task);
             return "task";
         }
-
         return "redirect:list-tasks";
     }
 
@@ -45,7 +49,8 @@ public class TaskController {
         if (result.hasErrors()) {
             return "task";
         }
-        TaskService.addNewTask(getLoggedInUserName(), task.getDescription(), task.getTargetDate(), false);
+        task.setUserName(getLoggedInUserName());
+        taskRepository.save(task);
         return "redirect:list-tasks";
     }
 
@@ -55,13 +60,13 @@ public class TaskController {
             return "task";
         }
         task.setUserName(getLoggedInUserName());
-        TaskService.updateTask(task);
+        taskRepository.save(task);
         return "redirect:list-tasks";
     }
 
     @RequestMapping(value = "/delete-task")
     public String deleteTask(@RequestParam int id) {
-        TaskService.deleteTaskById(id);
+        taskRepository.deleteById(id);
         return "redirect:list-tasks";
     }
 
