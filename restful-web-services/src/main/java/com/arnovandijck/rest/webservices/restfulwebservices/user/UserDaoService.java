@@ -22,17 +22,16 @@ public class UserDaoService {
         return users;
     }
 
-    public User save (User user) {
+    public void save (User user) {
         if (user.getId() == null) {
             user.setId(users.size() + 1);
         }
         users.add(user);
-        return user;
     }
 
     public User findOne(int id) {
         Predicate<? super User> predicate = user -> user.getId().equals(id);
-        return users.stream().filter(predicate).findFirst().get();
+        return users.stream().filter(predicate).findFirst().orElse(null);
     }
 
 }
