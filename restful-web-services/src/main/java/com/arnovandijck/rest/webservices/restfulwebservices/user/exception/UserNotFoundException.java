@@ -1,4 +1,4 @@
-package com.arnovandijck.rest.webservices.restfulwebservices.user;
+package com.arnovandijck.rest.webservices.restfulwebservices.user.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
