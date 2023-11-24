@@ -1,12 +1,12 @@
 import './App.css';
-import LearningComponent from "./components/learnings-examples/LearningComponent";
-import LearningJavascript from "./components/learnings-examples/LearningJavascript";
+import TodoApp from "./components/todo/TodoApp";
+// import Counter from "./components/counter/Counter";
 
 function App() {
   return (
     <div className="App">
-        <LearningComponent />
-        <LearningJavascript />
+        {/*<Counter />*/}
+        <TodoApp />
     </div>
   );
 }
