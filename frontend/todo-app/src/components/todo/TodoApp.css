@@ -11,13 +11,20 @@ label, input, button {
     transition: all 0.3s ease-in-out;
 }
 
-.TodoApp {
-    width: 400px;
-    margin: 0 auto;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    box-shadow: 0 0 5px #ccc;
+/*.TodoApp {*/
+/*    width: 800px;*/
+/*    margin: 0 auto;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*    border: 1px solid #ccc;*/
+/*    font-family: 'Roboto', sans-serif;*/
+/*    color: #333;*/
+/*    box-shadow: 0 0 5px #ccc;*/
+/*}*/
+
+footer {
+    bottom: 0;
+    position: absolute;
+    width: 90%;
+    height: 40px;
 }
