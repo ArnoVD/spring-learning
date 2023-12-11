@@ -52,7 +52,7 @@ public class BasicAuthSecurityConfiguration {
                 .password("{noop}root")
                 .roles(Roles.USER.name(), Roles.ADMIN.name())
                 .build();
-2
+
         // Add the users to the in memory user details manager
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
         jdbcUserDetailsManager.createUser(user);
