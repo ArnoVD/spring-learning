@@ -5,11 +5,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import javax.sql.DataSource;
 
 @Configuration
+@EnableMethodSecurity(jsr250Enabled = true, securedEnabled = true)
 public class BasicAuthSecurityConfiguration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -43,13 +46,17 @@ public class BasicAuthSecurityConfiguration {
     public UserDetailsService userDetailsService(DataSource dataSource) {
         // Create a user with username arno and password root
         var user = User.withUsername("arno")
-                .password("{noop}root")
+                //.password("{noop}root")
+                .password("root")
+                .passwordEncoder(passwordEncoder()::encode)
                 .roles(Roles.USER.name())
                 .build();
 
         // Create a user with username admin and password root
         var admin = User.withUsername("admin")
-                .password("{noop}root")
+                //.password("{noop}root")
+                .password("root")
+                .passwordEncoder(passwordEncoder()::encode)
                 .roles(Roles.USER.name(), Roles.ADMIN.name())
                 .build();
 
@@ -59,6 +66,11 @@ public class BasicAuthSecurityConfiguration {
         jdbcUserDetailsManager.createUser(admin);
 
         return jdbcUserDetailsManager;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
